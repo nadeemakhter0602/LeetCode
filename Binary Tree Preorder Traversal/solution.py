@@ -19,8 +19,7 @@ class Solution:
     def preorderTraversalIterative(self, root: Optional[TreeNode]) -> List[int]:
         stack = [root]
         res = []
-        curr = root
-        while curr is not None and len(stack) > 0:
+        while len(stack) > 0 and root is not None:
             curr = stack.pop()
             res.append(curr.val)
             if curr.right is not None:
