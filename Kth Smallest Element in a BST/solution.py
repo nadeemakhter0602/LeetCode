@@ -15,3 +15,17 @@ class Solution:
         res = []
         inorder(root, res)
         return res[k - 1]
+
+    # iterative solution
+    def kthSmallestIterative(self, root: Optional[TreeNode], k: int) -> int:
+        res = []
+        stack = []
+        curr = root
+        while curr is not None or len(stack) > 0:
+            while curr is not None:
+                stack.append(curr)
+                curr = curr.left
+            curr = stack.pop()
+            res.append(curr.val)
+            curr = curr.right
+        return res[k - 1]
