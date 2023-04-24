@@ -11,5 +11,6 @@ class Solution:
             if i >= 0:
                 digits[i] += 1
             else:
-                digits = [1] + digits
+                digits.append(0)
+                digits[0] += 1
         return digits
