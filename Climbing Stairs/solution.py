@@ -1,7 +1,7 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        a = 0
-        b = 1
-        for i in range(n):
-            a, b = b, a + b
-        return b
+        n += 1
+        sqrt5 = 5 ** 0.5
+        Phi = (1 + sqrt5) / 2
+        phi = (1 - sqrt5) / 2
+        return int((Phi**n - phi**n) // sqrt5)
