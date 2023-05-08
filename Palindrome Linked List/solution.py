@@ -8,17 +8,14 @@ class Solution:
         fast = head
         slow = head
         first_half = []
-        odd = False
         while fast != None:
             if fast.next != None:
                 fast = fast.next.next
             else:
-                fast = None
-                odd = True
+                slow = slow.next
+                break
             first_half.append(slow.val)
             slow = slow.next
-        if odd:
-            first_half.pop()
         while slow != None:
             if first_half and first_half.pop() != slow.val:
                 return False
