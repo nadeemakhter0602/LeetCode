@@ -7,17 +7,19 @@ class Solution:
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
         fast = head
         slow = head
-        first_half = []
+        reverse = None
         while fast != None:
-            if fast.next != None:
-                fast = fast.next.next
-            else:
+            if not fast.next:
                 slow = slow.next
                 break
-            first_half.append(slow.val)
-            slow = slow.next
+            fast = fast.next.next
+            backup = slow.next
+            slow.next = reverse
+            reverse = slow
+            slow = backup
         while slow != None:
-            if first_half and first_half.pop() != slow.val:
+            if reverse.val != slow.val:
                 return False
             slow = slow.next
+            reverse = reverse.next
         return True
