@@ -3,6 +3,9 @@ class Solution:
         if x <= 1:
             return x
         z = x
-        for i in range(20):
+        prev = x
+        while True:
             z -= (z*z - x) / (2*z)
-        return int(z)
+            if int(prev) == int(z):
+                return int(z)
+            prev = z
