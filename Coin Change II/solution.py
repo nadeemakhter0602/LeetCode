@@ -1,16 +1,13 @@
 class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
-        def coin_change(idx, amount, coins, cache=dict()):
-            if (amount, idx) in cache:
-                return cache[(amount, idx)]
-            if amount < 0:
-                return 0
-            elif amount == 0:
-                return 1
-            total = 0
-            for i in range(idx, len(coins)):
-                total += coin_change(i, amount - coins[i], coins, cache)
-            cache[(amount, idx)] = total
-            return total
-
-        return coin_change(0, amount, coins)
+        dp = [[0 for i in range(len(coins))] for i in range(amount + 1)]
+        for curr_amt in range(amount + 1):
+            for idx in range(len(coins)):
+                if curr_amt == 0:
+                    dp[curr_amt][idx] = 1
+                    continue
+                remaining = curr_amt - coins[len(coins) - 1 - idx]
+                if remaining >= 0:
+                    dp[curr_amt][idx] += dp[remaining][idx]
+                dp[curr_amt][idx] += dp[curr_amt][idx - 1] if idx - 1 >= 0 else 0
+        return dp[-1][-1]
