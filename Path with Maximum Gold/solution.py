@@ -3,27 +3,21 @@ class Solution:
         rowLen = len(grid)
         columnLen = len(grid[0])
 
-        def dfs(r, c, grid, visited):
-            if (
-                r == rowLen
-                or c == columnLen
-                or r < 0
-                or c < 0
-                or grid[r][c] == 0
-                or (r, c) in visited
-            ):
+        def dfs(r, c, grid):
+            if r == rowLen or c == columnLen or r < 0 or c < 0 or grid[r][c] == 0:
                 return 0
-            visited.add((r, c))
+            gold = grid[r][c]
+            grid[r][c] = 0
             maxGold = float("-inf")
-            maxGold = max(maxGold, grid[r][c] + dfs(r - 1, c, grid, visited))
-            maxGold = max(maxGold, grid[r][c] + dfs(r + 1, c, grid, visited))
-            maxGold = max(maxGold, grid[r][c] + dfs(r, c - 1, grid, visited))
-            maxGold = max(maxGold, grid[r][c] + dfs(r, c + 1, grid, visited))
-            visited.discard((r, c))
+            maxGold = max(maxGold, gold + dfs(r - 1, c, grid))
+            maxGold = max(maxGold, gold + dfs(r + 1, c, grid))
+            maxGold = max(maxGold, gold + dfs(r, c - 1, grid))
+            maxGold = max(maxGold, gold + dfs(r, c + 1, grid))
+            grid[r][c] = gold
             return maxGold
 
         maximumGold = 0
         for r in range(rowLen):
             for c in range(columnLen):
-                maximumGold = max(maximumGold, dfs(r, c, grid, set()))
+                maximumGold = max(maximumGold, dfs(r, c, grid))
         return maximumGold
