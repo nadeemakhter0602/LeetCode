@@ -8,10 +8,26 @@ class Solution:
     def removeLeafNodes(
         self, root: Optional[TreeNode], target: int
     ) -> Optional[TreeNode]:
-        if not root:
-            return root
-        root.left = self.removeLeafNodes(root.left, target)
-        root.right = self.removeLeafNodes(root.right, target)
-        if not root.left and not root.right and root.val == target:
-            return None
+        stack = [root]
+        parent = {root: None}
+        visited = set()
+        while stack:
+            curr = stack.pop()
+            if not curr:
+                continue
+            if not curr.left and not curr.right and curr.val == target:
+                if not parent[curr]:
+                    return None
+                elif parent[curr].left == curr:
+                    parent[curr].left = None
+                elif parent[curr].right == curr:
+                    parent[curr].right = None
+            if curr in visited:
+                continue
+            visited.add(curr)
+            parent[curr.left] = curr
+            parent[curr.right] = curr
+            stack.append(curr)
+            stack.append(curr.left)
+            stack.append(curr.right)
         return root
