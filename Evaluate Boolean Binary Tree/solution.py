@@ -6,9 +6,20 @@
 #         self.right = right
 class Solution:
     def evaluateTree(self, root: Optional[TreeNode]) -> bool:
-        if root.val <= 1:
-            return root.val == 1
-        if root.val == 2:
-            return self.evaluateTree(root.left) or self.evaluateTree(root.right)
-        else:
-            return self.evaluateTree(root.left) and self.evaluateTree(root.right)
+        stack = [root]
+        visited = set()
+        while stack:
+            curr = stack.pop()
+            if not curr:
+                continue
+            if curr.val == 2 and curr.left.val <= 1 and curr.right.val <= 1:
+                curr.val = curr.left.val == 1 or curr.right.val == 1
+            elif curr.val == 3 and curr.left.val <= 1 and curr.right.val <= 1:
+                curr.val = curr.left.val == 1 and curr.right.val == 1
+            if curr in visited:
+                continue
+            visited.add(curr)
+            stack.append(curr)
+            stack.append(curr.left)
+            stack.append(curr.right)
+        return root.val == 1
