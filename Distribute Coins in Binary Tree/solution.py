@@ -6,14 +6,13 @@
 #         self.right = right
 class Solution:
     def distributeCoins(self, root: Optional[TreeNode]) -> int:
-        def dfs(root, nodes, moves):
+        def dfs(root, moves):
             if not root:
-                return 0, 0, moves
-            coinsLeft = dfs(root.left, nodes, moves)
-            coinsRight = dfs(root.right, nodes, moves)
-            coins = root.val + coinsLeft[0] + coinsRight[0]
-            nodes = 1 + coinsLeft[1] + coinsRight[1]
-            moves += abs(nodes - coins) + coinsLeft[2] + coinsRight[2]
-            return coins, nodes, moves
+                return 0, moves
+            coinsLeft = dfs(root.left, moves)
+            coinsRight = dfs(root.right, moves)
+            extraCoins = root.val - 1 + coinsLeft[0] + coinsRight[0]
+            moves += abs(extraCoins) + coinsLeft[1] + coinsRight[1]
+            return extraCoins, moves
 
-        return dfs(root, 0, 0)[2]
+        return dfs(root, 0)[1]
