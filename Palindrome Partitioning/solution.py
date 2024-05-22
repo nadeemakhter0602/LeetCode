@@ -12,14 +12,11 @@ class Solution:
         def allPalindromes(s, partition, palindromes):
             if not s:
                 palindromes.append(partition)
-                return partition
             for idx in range(len(s)):
                 if isPalindrome(s[: idx + 1]):
                     allPalindromes(
                         s[idx + 1 :], partition + [s[: idx + 1]], palindromes
                     )
-            return partition
+            return palindromes
 
-        palindromes = []
-        allPalindromes(s, [], palindromes)
-        return palindromes
+        return allPalindromes(s, [], [])
