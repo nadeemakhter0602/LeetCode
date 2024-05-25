@@ -1,25 +1,13 @@
 class Solution:
     def beautifulSubsets(self, nums: List[int], k: int) -> int:
-        def checkBeautiful(subset):
-            if len(subset) == 0:
-                return False
-            elif len(subset) == 1:
-                return True
-            subSet = set(subset)
-            for element in subset:
-                if element + k in subSet:
-                    return False
-            return True
+        def dfs(i, subset, count):
+            if i == len(nums):
+                return 1
+            count = dfs(i + 1, subset, count)
+            if subset.get(nums[i] + k, 0) == 0 and subset.get(nums[i] - k, 0) == 0:
+                subset[nums[i]] = 1 + subset.get(nums[i], 0)
+                count += dfs(i + 1, subset, count)
+                subset[nums[i]] -= 1
+            return count
 
-        def dfs(i, subset, powerset):
-            if i >= len(nums):
-                if checkBeautiful(subset):
-                    powerset.append(subset)
-                return subset
-            dfs(i + 1, subset, powerset)
-            dfs(i + 1, subset + [nums[i]], powerset)
-            return subset
-
-        powerset = []
-        dfs(0, [], powerset)
-        return len(powerset)
+        return dfs(0, dict(), 0) - 1
