@@ -3,17 +3,17 @@ class Solution:
         carry = 0
         steps = 0
         for i in range(len(s) - 1, 0, -1):
-            if s[i] == "1" and carry == 0:
+            if not carry:
+                if s[i] == "1":
+                    carry = 1
+                    steps += 2
+                else:
+                    steps += 1
+            else:
                 carry = 1
-                steps += 2
-            elif s[i] == "1" and carry == 1:
-                carry = 1
-                steps += 1
-            elif s[i] == "0" and carry == 0:
-                steps += 1
-            elif s[i] == "0" and carry == 1:
-                carry = 1
-                steps += 2
-        if carry == 1:
-            steps += 1
+                if s[i] == "1":
+                    steps += 1
+                else:
+                    steps += 2
+        steps += carry
         return steps
