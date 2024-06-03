@@ -1,10 +1,10 @@
 class Solution:
     def appendCharacters(self, s: str, t: str) -> int:
-        i, j = 0, 0
-        matched_chars = 0
-        while i < len(t) and j < len(s):
-            if t[i] == s[j]:
-                matched_chars += 1
-                i += 1
+        j = 0
+        for i in range(len(t)):
+            while j < len(s) and s[j] != t[i]:
+                j += 1
+            if j >= len(s):
+                return len(t) - i
             j += 1
-        return len(t) - matched_chars
+        return 0
