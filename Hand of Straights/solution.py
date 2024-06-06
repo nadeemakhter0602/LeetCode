@@ -10,7 +10,7 @@ class Solution:
         for i in hand:
             if count[i] > 0:
                 for j in range(i, i + groupSize):
-                    count[j] = count.get(j, 0) - 1
+                    count[j] -= 1
                     if count[j] < 0:
                         return False
         return True
