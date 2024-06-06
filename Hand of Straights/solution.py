@@ -7,11 +7,14 @@ class Solution:
             return False
         count = Counter(hand)
         for i in hand:
-            while count[i - 1]:
-                i -= 1
-            if count[i] > 0:
-                for j in range(i, i + groupSize):
-                    count[j] -= 1
-                    if count[j] < 0:
-                        return False
+            start = i
+            while count[start - 1]:
+                start -= 1
+            while start <= i:
+                while count[start] > 0:
+                    for j in range(start, start + groupSize):
+                        count[j] -= 1
+                        if count[j] < 0:
+                            return False
+                start += 1
         return True
